@@ -23,9 +23,12 @@ def handle_conversation():
         if user_input.lower() == "exit":
             break
 
-        result = chain.invoke({"context": "", "question": user_input})
-        print("Bot:", result)
-        context += f"\n User: {user_input}\nAI: {result}"
+        try:
+            result = chain.invoke({"context": context, "question": user_input})
+            print("Bot:", result.strip())
+            context += f"\n User: {user_input}\nAI: {result.strip()}"
+        except Exception as e:
+            print("Bot: Sorry, I encountered an error:", str(e))
 
 if __name__ == "__main__":
     handle_conversation()
